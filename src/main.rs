@@ -30,6 +30,7 @@ mod main {
                 Ok(n) => {
                     if n > 0 {
                         if set.contains(pty) {
+                            print!("o:");
                             match child.pty().read(&mut buf) {
                                 Ok(bytes) => {
                                     let buf = &buf[..bytes];
@@ -49,6 +50,7 @@ mod main {
                             };
                         }
                         if set.contains(stdin) {
+                            print!("i:");
                             match std::io::stdin().read(&mut buf) {
                                 Ok(bytes) => {
                                     let buf = &buf[..bytes];
@@ -145,6 +147,8 @@ fn main() {
         // .args(&["500"])
         .spawn_pty(Some(&pty_process::Size::new(24, 80)))
         .unwrap();
+
+    // child.resize_pty()
 
     main::run(&child);
 
